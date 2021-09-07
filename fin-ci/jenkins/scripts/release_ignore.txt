@@ -1,0 +1,16 @@
+:!/stw/web.config
+:!/stw/Global.asax
+:!/stw/default.aspx
+:!/stw/login.aspx
+:!/stw/logout.aspx
+:!/ac-test-core/*
+:!/.git*
+:!/vm/*
+:!/yarn.*
+:!*.lnk
+:!/fin-ci/*
+:!/utility_billing_customer_portal/*
+:!*ech
+:!*.dat
+:!/stw/stw_php/stwcr/receipts_cloud_prog/*
+:!/stw/stw_php/stwup/*
