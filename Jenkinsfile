@@ -5,13 +5,7 @@ pipeline {
     }
   }  
   stages {
-    stage ('OCI modified confirmation') {
-      steps {
-          ////sh '/e/fin-ci/jenkins/scripts/oci-updated.sh "$GIT_COMMIT" "$GIT_PREVIOUS_COMMIT" "$GIT_BRANCH"'
-          sh '/c/projects/jenkins-oci/fin-ci/jenkins/scripts/oci-updated.sh "$GIT_COMMIT" "$GIT_BRANCH"'
-      }
-    }
-    stage ('OCI build') {
+    stage ('OCI Commit List') {
       steps {
           script {
                 getCurrentBuildGitDetails()
@@ -19,6 +13,12 @@ pipeline {
           //sh '/e/fin-ci/jenkins/scripts/oci-frontend.sh'
       }
     }
+    stage ('OCI modified confirmation') {
+      steps {
+          ////sh '/e/fin-ci/jenkins/scripts/oci-updated.sh "$GIT_COMMIT" "$GIT_PREVIOUS_COMMIT" "$GIT_BRANCH"'
+          sh '/c/projects/jenkins-oci/fin-ci/jenkins/scripts/oci-updated.sh "$GIT_COMMIT" "$GIT_BRANCH"'
+      }
+    }    
   }
 }
 
@@ -38,4 +38,5 @@ def getCurrentBuildGitDetails() {
             }
         }
     }
+  echo "****************** #### ***********************"
 }
