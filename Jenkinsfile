@@ -14,22 +14,7 @@ pipeline {
     stage ('OCI build') {
       steps {
           script {
-              def changeLogSets = currentBuild.changeSets;
-              def commitMessages = ''
-            for (int i = 0; i < changeLogSets.size(); i++) {
-                def entries = changeLogSets[i].items
-                for (int j = 0; j < entries.length; j++) {
-                    def entry = entries[j]
-                    commitMessages+= "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}\n"
-                    echo commitMessages
-                }
-            }
-            if (!commitMessages){
-                commitMessages = "No New Changes"
-            }
-            slackSend (channel: 'team-financials-ci-notification-poc', color: "good", message: "Build Successful.\n Changes:\n ${commitMessages}" + "\n\n Check console output at: (${env.BUILD_URL})/console" + "\n")
-            
-                //getCurrentBuildGitDetails()
+                getCurrentBuildGitDetails()
             }
           //sh '/e/fin-ci/jenkins/scripts/oci-frontend.sh'
       }
