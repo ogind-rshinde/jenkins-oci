@@ -5,17 +5,21 @@ pipeline {
     }
   }  
   stages {
-    stage ('OCI Commit List') {
-      steps {
-          script {
+//     stage ('OCI Commit List') {
+//       steps {
+//           script {
+//                 getCurrentBuildGitDetails()
+//             }
+//           //sh '/e/fin-ci/jenkins/scripts/oci-frontend.sh'
+//       }
+//     }
+    stage ('OCI modified confirmation') {
+      when {
+            expression {
                 getCurrentBuildGitDetails()
             }
-          //sh '/e/fin-ci/jenkins/scripts/oci-frontend.sh'
-      }
-    }
-    stage ('OCI modified confirmation') {
+        }
       steps {
-          ////sh '/e/fin-ci/jenkins/scripts/oci-updated.sh "$GIT_COMMIT" "$GIT_PREVIOUS_COMMIT" "$GIT_BRANCH"'
           sh '/c/projects/jenkins-oci/fin-ci/jenkins/scripts/oci-updated.sh "$GIT_COMMIT" "$GIT_BRANCH"'
       }
     }    
@@ -26,6 +30,7 @@ pipeline {
 def getCurrentBuildGitDetails() {
     echo "getting SCM changes ***********************"
     def changeLogSets = currentBuild.changeSets
+    def isOciBuildRequired = false
     for (int i = 0; i < changeLogSets.size(); i++) {
         def entries = changeLogSets[i].items
         for (int j = 0; j < entries.length; j++) {
@@ -39,8 +44,13 @@ def getCurrentBuildGitDetails() {
                 def ismodify = modifiedFile.matches("stw/stw_php/oci-app(.*)")
                 echo "Is modified : ${ismodify}"
                 echo "  ${file.editType.name} ${file.path}"
+              if (ismodify) {
+                isOciBuildRequired = true
+              }
             }
         }
     }
+  echo " Returning a value as : ${isOciBuildRequired}"
   echo "****************** #### ***********************"
+  return isOciBuildRequired
 }
