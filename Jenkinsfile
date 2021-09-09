@@ -35,6 +35,9 @@ def getCurrentBuildGitDetails() {
             for (int k = 0; k < files.size(); k++) {
                 def file = files[k]
                 echo "File Path:  ${file.path} "
+                def modifiedFile = file.path
+                def ismodify = modifiedFile.matches('/stw/oci-app/')
+                echo "Is modified : ${ismodify}"
                 echo "  ${file.editType.name} ${file.path}"
             }
         }
