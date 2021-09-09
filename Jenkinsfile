@@ -36,7 +36,7 @@ def getCurrentBuildGitDetails() {
                 def file = files[k]
                 echo "File Path:  ${file.path} "
                 def modifiedFile = file.path
-                def ismodify = modifiedFile.matches('stw/stw_php/oci-app')
+                def ismodify = modifiedFile.matches("stw/stw_php/oci-app(.*)")
                 echo "Is modified : ${ismodify}"
                 echo "  ${file.editType.name} ${file.path}"
             }
