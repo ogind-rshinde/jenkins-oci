@@ -34,7 +34,7 @@ def getCurrentBuildGitDetails() {
             def files = new ArrayList(entry.affectedFiles)
             for (int k = 0; k < files.size(); k++) {
                 def file = files[k]
-                echo "File Path:  ${file.getPath()} "
+                echo "File Path:  ${file.path} "
                 echo "  ${file.editType.name} ${file.path}"
             }
         }
